@@ -1,5 +1,6 @@
 import requests
 import pytest
+from ..src.gpt import Chat
 
 class Testchat:
     def test_chat_index(self):
@@ -17,6 +18,25 @@ class Testchat:
         chat = response.content
         assert "id" in chat
         assert "hash" in chat
+
+class TestGPA():
+    def test_chatGPT_without_history():
+        system_msg = 'You are a helpful assistant.'
+        historic = []
+        message = 'Who won the world series in 2020?'
+
+        chat = Chat()
+        chat.send(system_msg, historic, message)
+
+    def test_chatGPT_with_history():
+        system_msg = 'You are a helpful assistant.'
+        historic = [
+            ('Who won the world series in 2020?', 'The Los Angeles Dodgers won the World Series in 2020.'),
+        ]
+        message = 'Where was it played?'
+
+        chat = Chat()
+        chat.send(system_msg, historic, message)
 
 if __name__ == "__main__":
     pytest.main()
