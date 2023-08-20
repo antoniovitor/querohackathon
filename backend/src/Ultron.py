@@ -3,26 +3,26 @@ import os
 from fastapi import FastAPI, HTTPException
 from database_handler import SqlDatabase, Student, 
 from gpt import Chat
-
+from typing import List, Tuple
 class Ultron:
-    def __init__(self, openai_ke):
+    def __init__(self):
         self.students_db = SqlDatabase('alunos')
         self.questions_db = SqlDatabase('interactions')
         self.chat = Chat()
 
-    def get_historic(self,ra,uc):
+    def get_historic(self,ra,uc) -> List[Tuple[str,str]]:
         historic = []
         return historic
 
-    def check_question(self, question: str, uc: str):
+    def check_question(self, question: str, uc: str) -> bool:
         # CONSULTA A PERGUNTA A UM MODELO DE SIMILARIDADE DO PROMPT/UC
         return True
     
-    def insert_answer(self, question, uc, ra):
+    def insert_answer(self, question: str, uc: str, ra: str) -> bool:
         # Armazenar a pergunta e resposta no banco
         return True
     
-    def process_question(self, student_id, student_bio, question):
+    def process_question(self, student_id: str, student_bio: str, question: str) -> str:
 
         # verifica se a pergunta está de acordo com a disciplina:
         if self.check_question(question):
