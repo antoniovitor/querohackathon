@@ -10,25 +10,35 @@ class Ultron:
         self.questions_db = SqlDatabase('interactions')
         self.chat = Chat()
 
-    def llm_query(self, question, student_bio):
-        # Simulação da chamada GPT-4
-        # usar student_bio como system_msg
-        # usar question como question
-        # usar self.openai_key como openai_key
-        return f"Resposta para '{question}' com biografia '{student_bio}'"
+    def get_historic(self,ra,uc):
+        historic = []
+        return historic
+
+    def check_question(self, question: str, uc: str):
+        # CONSULTA A PERGUNTA A UM MODELO DE SIMILARIDADE DO PROMPT/UC
+        return True
     
-    def process_question(self, student_id, question):
-        # Armazenar a pergunta no banco
-        insert_question(self.questions_db_url, student_id, question)
+    def insert_answer(self, question, uc, ra):
+        # Armazenar a pergunta e resposta no banco
+        return True
+    
+    def process_question(self, student_id, student_bio, question):
+
+        # verifica se a pergunta está de acordo com a disciplina:
+        if self.check_question(question):
         
-        # Obter a biografia do aluno
-        student_bio = fetch_student_bio(self.students_db_url, student_id)
+            # Obtem do banco a lista de tuplas de pergunta,resposta
+            # historic = self.get_historic(ra, uc)
+            
+            # Faz a pergunta com a bio do aluno
+            # Simular consulta ao GPT-4 com a pergunta e a biografia do aluno
+            # No código real, você chamaria a API do GPT-4 aqui
+            #sponse = self.chat.send(system_msg = student_bio, historic = historic, message = question)
 
-        # Simular consulta ao GPT-4 com a pergunta e a biografia do aluno
-        # No código real, você chamaria a API do GPT-4 aqui
-        response = self.llm_query(question, student_bio)
+            # Armazenar a pergunta e resposta no banco
+            #insert_answer(self.questions_db_url, student_id, question, response)
 
-        # Armazenar a resposta no banco
-        insert_answer(self.questions_db_url, student_id, question, response)
-
-        return response
+            #return response
+            return "RESPOSTA : "
+        else:
+            return "PERGUNTA NAO ESTA DE ACORDO"
