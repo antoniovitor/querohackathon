@@ -3,6 +3,7 @@ from sqlalchemy.orm import sessionmaker
 from database_handler import SqlDatabase, Student
 import os
 from pydantic import BaseModel
+import requests
 
 class AlterarBioResponse(BaseModel):
     status: str
@@ -24,7 +25,7 @@ class Aluno:
         if not self.student_data:
             raise HTTPException(status_code=404, detail="Aluno não cadastrado")
         self.bio = self.student_data.bio
-        self.ULTRON_URL = os.getenv('ULTRON_URL')
+        self.ULTRON_URL = os.getenv('ULTRON_URL') + "/ask"
 
     def _get_student_by_ra(self):
         Session = sessionmaker(bind=self.sql_db.get_engine())
@@ -42,9 +43,12 @@ class Aluno:
         return AlterarBioResponse(status="success", new_bio=new_bio)
 
     def ask_ultron(self, question: str) -> AskUltronResponse:
-        status = f"Sua pergunta para o ultron foi {question}"
-        return AskUltronResponse(status="success", msg=status)
-        # Implementar a lógica de comunicação com o endpoint Ultron
+        payload = {
+            "question" : question,
+            "ra" : self.RA
+        }
+        response = requests.post(self.ULTRON_URL, payload)
+        return AskUltronResponse(status="success", msg=response)
     
     @staticmethod
     def cadastrar_aluno(RA: str, bio: str) -> CadastrarAlunoResponse:
