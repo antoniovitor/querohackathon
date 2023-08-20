@@ -1,5 +1,8 @@
-openai
-python-dotenv
-web.py
+# ALUNO
+fastapi
+pydantic
 sqlalchemy
+openai
 psycopg2-binary
+uvicorn
+# ULTRON

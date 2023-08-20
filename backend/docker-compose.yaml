@@ -12,3 +12,31 @@ services:
     volumes:
       - ./data/postgree:/var/lib/postgresql/data
       - ./scripts/postgree/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  aluno-service1:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ["python3", "src/controller_aluno.py"]
+    ports:
+      - "8000:8000"
+    environment:
+      POSTGRES_URL: postgresql://user:password@db:5432/mydatabase
+      ULTRON_URL: ultron
+      PORT: 8000
+    depends_on:
+      - db
+
+  aluno-service2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ["python3", "src/controller_aluno.py"]
+    ports:
+      - "8001:8001"
+    environment:
+      POSTGRES_URL: postgresql://user:password@db:5432/mydatabase
+      ULTRON_URL: ultron
+      PORT: 8001
+    depends_on:
+      - db

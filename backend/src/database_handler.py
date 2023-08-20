@@ -2,6 +2,7 @@ from sqlalchemy import create_engine, Column, Integer, String, DateTime
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 import datetime
+import os
 
 Base = declarative_base()
 
@@ -45,3 +46,18 @@ def insert_answer(db_url, student_id, question, answer):
     if qa:
         qa.answer = answer
         session.commit()
+
+class SqlDatabase:
+    _instance = None
+    def __new__(cls, db_name):
+        if cls._instance is None:
+            cls._instance = super(SqlDatabase, cls).__new__(cls)
+            POSTGRES_URL = os.getenv('POSTGRES_URL')
+            POSTGRES_PASSWORD = os.getenv('POSTGRES_PASSWORD')
+            POSTGRES_USER = os.getenv('POSTGRES_USER')
+            DB_URL = f'postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_URL}/{db_name}'
+            cls._instance.engine = create_engine(DB_URL)
+        return cls._instance
+
+    def get_engine(self):
+        return self._instance.engine
