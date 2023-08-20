@@ -45,7 +45,8 @@ class Aluno:
     def ask_ultron(self, question: str) -> AskUltronResponse:
         payload = {
             "question" : question,
-            "ra" : self.RA
+            "ra" : self.RA,
+            "bio" : self.bio
         }
         url = self.ULTRON_URL + "/ask"
         response = requests.post(url, payload)
