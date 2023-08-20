@@ -1,0 +1,14 @@
+version: '3.1'
+
+services:
+  db:
+    image: postgres:latest
+    container_name: my_postgres
+    network_mode: host
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydatabase
+    volumes:
+      - ./data/postgree:/var/lib/postgresql/data
+      - ./scripts/postgree/init.sql:/docker-entrypoint-initdb.d/init.sql
