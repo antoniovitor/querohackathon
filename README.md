@@ -8,4 +8,4 @@ A aplicação tem como objetivo ser um mentor online, onde o aluno poderá fazer
 Além dessa vantagem para a faculdade, outras duas irão aparecer: A vantagem competitiva e outro serviço que o mentor prestará: As pergunas serão armazenadas e contabilizadas, sendo enviadas posteriormente para o professor de modo que ele tenha informações sobre quais as maiores dificuldades apresentadas pelos alunos. 
 
 Dataflow
-![dataflow](/businessmodel/PresentationsQueroAI.png)
+![dataflow](/businessmodel/dataflow.png)
