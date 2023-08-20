@@ -1,20 +1,11 @@
-import web
-import gpt
-from dotenv import load_dotenv
+from fastapi import FastAPI
+from Ultron import Ultron
 
-urls = (
-    '/chat/(.*)', 'ChatEndpoint'
-)
-app = web.application(urls, globals())
+app = FastAPI()
 
-class ChatEndpoint:
-    def POST(self, hash):
-        print(hash)
-        return 'here'
+ultron = Ultron(openai_key="YOUR_OPENAI_KEY", students_db_url="URL_STUDENTS_DB", questions_db_url="URL_QUESTIONS_DB")
 
-        chat = gpt.Chat()
-        message = chat.send('Who won the world series in 2020?')
-
-if __name__ == "__main__":
-    load_dotenv()
-    app.run()
+@app.post("/ask")
+def ask_question(student_id: int, question: str):
+    response = ultron.process_question(student_id, question)
+    return {"response": response}
