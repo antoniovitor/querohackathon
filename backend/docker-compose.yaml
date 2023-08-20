@@ -24,6 +24,7 @@ services:
       POSTGRES_URL: postgresql://user:password@db:5432/mydatabase
       ULTRON_URL: ultron
       PORT: 8000
+      OPENAI_KEY: ${OPENAI_KEY}
     depends_on:
       - db
 

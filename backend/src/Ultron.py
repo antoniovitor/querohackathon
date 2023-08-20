@@ -1,11 +1,14 @@
 from database_handler import fetch_student_bio, insert_question, insert_answer
 import os
+from fastapi import FastAPI, HTTPException
+from database_handler import SqlDatabase, Student, 
+from gpt import Chat
 
 class Ultron:
-    def __init__(self, openai_key, students_db_url, questions_db_url):
-        self.openai_key = os.getenv[""]
-        self.students_db_url = students_db_url
-        self.questions_db_url = questions_db_url
+    def __init__(self, openai_ke):
+        self.students_db = SqlDatabase('alunos')
+        self.questions_db = SqlDatabase('interactions')
+        self.chat = Chat()
 
     def llm_query(self, question, student_bio):
         # Simulação da chamada GPT-4

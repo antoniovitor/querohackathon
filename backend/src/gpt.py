@@ -1,12 +1,15 @@
 import os
 import openai
+from fastapi import FastAPI, HTTPException
 
 class Chat():
     def __init__(self) -> None:
-        openai.api_key = os.getenv("OPENAI_KEY")
+        self.openai_key = os.getenv["OPENAI_KEY"]
+        if not self.openai_key:
+            raise HTTPException(status_code=404, detail="CHAVE OPENAI NULA")
         self.messages = []
     
-    def send(self, message):
+    def send(self, system_msg, message):
         self.messages.append({ "role": "user", "content": message })
 
         response = openai.ChatCompletion.create(

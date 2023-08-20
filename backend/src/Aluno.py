@@ -25,7 +25,7 @@ class Aluno:
         if not self.student_data:
             raise HTTPException(status_code=404, detail="Aluno não cadastrado")
         self.bio = self.student_data.bio
-        self.ULTRON_URL = os.getenv('ULTRON_URL') + "/ask"
+        self.ULTRON_URL = os.getenv('ULTRON_URL')
 
     def _get_student_by_ra(self):
         Session = sessionmaker(bind=self.sql_db.get_engine())
@@ -47,7 +47,8 @@ class Aluno:
             "question" : question,
             "ra" : self.RA
         }
-        response = requests.post(self.ULTRON_URL, payload)
+        url = self.ULTRON_URL + "/ask"
+        response = requests.post(url, payload)
         return AskUltronResponse(status="success", msg=response)
     
     @staticmethod

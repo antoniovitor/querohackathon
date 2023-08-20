@@ -3,7 +3,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 import datetime
 import os
-
+from fastapi import FastAPI, HTTPException
 Base = declarative_base()
 
 class Student(Base):
@@ -55,6 +55,8 @@ class SqlDatabase:
             POSTGRES_URL = os.getenv('POSTGRES_URL')
             POSTGRES_PASSWORD = os.getenv('POSTGRES_PASSWORD')
             POSTGRES_USER = os.getenv('POSTGRES_USER')
+            if not POSTGRES_URL or not POSTGRES_PASSWORD or not POSTGRES_USER:
+                raise HTTPException(status_code=404, detail="CHAVE OPENAI NULA")
             DB_URL = f'postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_URL}/{db_name}'
             cls._instance.engine = create_engine(DB_URL)
         return cls._instance
