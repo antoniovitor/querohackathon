@@ -4,8 +4,8 @@ from fastapi import FastAPI, HTTPException
 from typing import List, Tuple
 
 class Chat():
-    def __init__(self) -> None:
-        self.openai_key = os.getenv["OPENAI_KEY"]
+    def __init__(self, uc: str) -> None:
+        self.openai_key = os.getenv("OPENAI_KEY")
         if not self.openai_key:
             raise HTTPException(status_code=404, detail="CHAVE OPENAI NULA")
         

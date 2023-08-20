@@ -40,7 +40,7 @@ async def ask_ultron(RA: str, request: AskUltronRequest):
 
 @app.post("/aluno/cadastrar")
 async def cadastrar_aluno(request: CadastrarAlunoRequest):
-    return Aluno.cadastrar_aluno(request.RA, request.bio)
+    return Aluno.db_cadastrar_aluno(request.RA, request.bio)
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=PORT)
