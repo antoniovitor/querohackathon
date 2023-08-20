@@ -10,15 +10,15 @@ class Ultron:
         self.questions_db = SqlDatabase('interactions')
         self.chat = Chat()
 
-    def get_historic(self,ra,uc) -> List[Tuple[str,str]]:
+    def _get_historic(self,ra,uc) -> List[Tuple[str,str]]:
         historic = []
         return historic
 
-    def check_question(self, question: str, uc: str) -> bool:
+    def _check_question(self, question: str, uc: str) -> bool:
         # CONSULTA A PERGUNTA A UM MODELO DE SIMILARIDADE DO PROMPT/UC
         return True
     
-    def insert_answer(self, question: str, uc: str, ra: str) -> bool:
+    def _insert_answer(self, question: str, uc: str, ra: str) -> bool:
         # Armazenar a pergunta e resposta no banco
         return True
     
