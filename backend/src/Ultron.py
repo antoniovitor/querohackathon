@@ -7,7 +7,7 @@ from typing import List, Tuple
 from pydantic import BaseModel
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import desc
-
+from database_handler import Interaction
 class ProcessQuestionResponse(BaseModel):
     status_code: int
     response: str
@@ -21,6 +21,16 @@ class Ultron:
         self.chat = Chat(uc)
 
     def _db_get_historic(self, student_id: str) -> List[Tuple[str, str]]:
+        session = self.questions_db.get_Session()
+        
+        # Consulta os registros para o student_id e uc especificados
+        historic_query = session.query(Interaction.pergunta, Interaction.resposta)\
+            .filter_by(ra=student_id, uc=uc)\
+            .order_by(desc(Interaction.timestamp))\
+            .limit(size)
+
+        # Converte os resultados em uma lista de tuplas
+        historic = [(record.pergunta, record.resposta) for record in historic_query]
         return self.questions_db.get_historic(self.uc, student_id, self.historic_size)
 
     def _db_store(self, student_id: str, question: str, answer: str) -> bool:

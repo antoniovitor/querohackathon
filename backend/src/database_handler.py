@@ -68,19 +68,12 @@ class SqlDatabase:
     def get_engine(self):
         return self._instance.engine
     
+    def get_Session(self) -> sessionmaker:
+        return sessionmaker(bind=self.get_engine())
+    
     # METODOS ULTRON
     def get_historic(self, uc: str, student_id: str, size: int) -> List[Tuple[str, str]]:
-        Session = sessionmaker(bind=self.get_engine())
-        session = Session()
-
-        # Consulta os registros para o student_id e uc especificados
-        historic_query = session.query(Interaction.pergunta, Interaction.resposta)\
-            .filter_by(ra=student_id, uc=uc)\
-            .order_by(desc(Interaction.timestamp))\
-            .limit(size)
-
-        # Converte os resultados em uma lista de tuplas
-        historic = [(record.pergunta, record.resposta) for record in historic_query]
+        
 
         return historic
 
